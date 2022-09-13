@@ -66,3 +66,47 @@ from
 WHERE
     weight_kg >= 10.4
     and weight_kg <= 17.3;
+
+-- first transcation 
+BEGIN;
+UPDATE animals
+set species = 'unspecified';
+SELECT * FROM animals;
+ROLLBACK;
+
+
+-- second transcation
+BEGIN;
+UPDATE animals
+SET species = 'digimon'
+WHERE name LIKE '%mon';
+UPDATE animals
+SET species = 'pokemon'
+WHERE species IS NULL;
+COMMIT;
+SELECT * FROM animals;
+
+--third transcation 
+BEGIN;
+DELETE FROM animals;
+ROLLBACK;
+SELECT * FROM animals;
+
+--forth transcation
+BEGIN;
+DELETE from animals
+WHERE date_of_birth > '2022-01-01';
+SAVEPOINT SP1;
+UPDATE animals
+SET weight_kg = weight_kg * -1;
+ROLLBACK TO SP1;
+UPDATE animals
+SET weight_kg = weight_kg * -1
+WHERE weight_kg < 0;
+COMMIT;
+
+--How many animals are there?
+--How many animals have never tried to escape?
+--What is the average weight of animals?
+--Who escapes the most, neutered or not neutered animals?
+--What is the minimum and maximum weight of each type of animal?
