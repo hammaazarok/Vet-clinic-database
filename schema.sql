@@ -8,3 +8,8 @@ CREATE TABLE animals (
     weight_kg decimal,
     PRIMARY KEY(id)
 );
+
+
+-- add species to animals table
+ALTER TABLE animals
+ADD COLUMN species VARCHAR(250);
